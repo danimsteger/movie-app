@@ -21,6 +21,11 @@ Review.init(
       min: 1,
       max: 5,
     },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
     movie_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
