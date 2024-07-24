@@ -1,44 +1,43 @@
 const { Model, DataTypes } = require('sequelize');
+
 const sequelize = require('../config/connection');
 
-class MoviePost extends Model {}
+class MovieReview extends Model {}
 
-MoviePost.init(
+MovieReview.init(
   {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
-    movie_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    watch_location: {
-      type: DataTypes.STRING,
-    },
-    movie_rating: {
+    movie_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      min: 1,
-      max: 5,
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
       references: {
-        model: 'user',
+        model: 'movie',
         key: 'id',
-      },
+        unique: false
+      }
     },
+    review_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'review',
+        key: 'id',
+        unique: false
+      }
+    }
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'moviepost',
+    modelName: 'movie_review',
   }
 );
 
-module.exports = MoviePost;
+module.exports = MovieReview;
