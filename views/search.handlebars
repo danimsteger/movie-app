@@ -1,36 +1,36 @@
-
-// Search page for movies of that search term????
-<section id='search-page' class='row justify-content-center d-flex'>
-  <div class='col-10 d-flex'>
-    <div class='m-5 col-8'>
-      <label for='exampleFormControlInput1' class='form-label'></label>
-      <input
-        type='email'
-        class='form-control'
-        id='exampleFormControlInput1'
-        placeholder='Search for a movie'
-      />
-    </div>
-    <button class='btn btn-primary col-2 m-5'>Search</button>
-  </div>
-  <!-- CARD FOR EACH MOVIE THAT THE API FINDS FOR THAT SEARCH TERM???? -->
-  <div class='card col-10 m-5'>
-    <div class='card-body row'>
-      <div class='col-1 d-flex align-items-center'>
-        <button class='btn btn-secondary'>+</button>
-      </div>
-      <div class='col-2 d-flex align-items-center'>
-        <img
-          src='https://m.media-amazon.com/images/I/51sBtK24saL._SX300_SY300_QL70_FMwebp_.jpg'
-          class='img-fluid rounded-start'
-          alt='Titantic Poster'
+<section id="search-page" class="row justify-content-center d-flex">
+  <form class="form new-movie-search">
+    <div class="col-10 d-flex">
+      <div class="m-5 col-8">
+        <label for="movie-search" class="form-label">Search for movie:</label>
+        <input
+          class="form-input"
+          type="text"
+          id="movie-search"
+          name="movie-search"
         />
       </div>
-      <div class='col-6 m-4'>
+      <button type="click" id = "submitBtn"class="btn btn-primary col-2 m-5">Search</button>
+    </div>
+  </form>
+  <!-- CARD FOR EACH MOVIE THAT THE API FINDS FOR THAT SEARCH TERM???? -->
+  <div class="card col-10 m-5">
+    <div class="card-body row">
+      <div class="col-1 d-flex align-items-center">
+        <button class="btn btn-secondary">+</button>
+      </div>
+      <div class="col-2 d-flex align-items-center">
+        <img
+          src="https://m.media-amazon.com/images/I/51sBtK24saL._SX300_SY300_QL70_FMwebp_.jpg"
+          class="img-fluid rounded-start"
+          alt="Titantic Poster"
+        />
+      </div>
+      <div class="col-6 m-4">
         <h3>ADD IN MOVIE TITLE HERE</h3>
         <p>Add in movie summary from the API</p>
 
-        <a href='ADD IN LINK'><p>ADD IN LINKS TO WATCH HERE</p></a>
+        <a href="ADD IN LINK"><p>ADD IN LINKS TO WATCH HERE</p></a>
       </div>
       <div class='col-2 d-flex align-items-center'>
         <a class='btn btn-secondary' type='button' href='/reviews/new'>
@@ -41,3 +41,5 @@
   </div>
   <!-- CARD ENDS HERE -->
 </section>
+
+<script src="/js/search.js"></script>
