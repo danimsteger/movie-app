@@ -11,7 +11,10 @@ Movie.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    imdb_movieid: {
+      type: DataTypes.STRING,
+    },
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
