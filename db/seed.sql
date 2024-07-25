@@ -6,7 +6,7 @@ VALUES ('Jane Doe', 'email@email.com', 'password'),
        ('Sidney Prescott', 'sydrules@hotmail.org', '123a123b123c'),
        ('Billy', 'billy@icloud.gov', 'billyissocool');
 
-INSERT INTO movie (name, user_id)
+INSERT INTO movie (title, user_id)
 VALUES ('Titanic', 1),
        ('Twilight', 2),
        ('Scream', 3),
