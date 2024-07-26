@@ -68,7 +68,7 @@ router.get('/reviews/new', async (req, res) => {
   }
 });
 
-router.get('/users/reviews', async (req, res) => {
+router.get('/users/reviews', withAuth, async (req, res) => {
   try {
     // const userData = await User.findByPk(req.session.user_id, {
     //   attributes: { exclude: ['password'] },
@@ -93,7 +93,7 @@ router.get('/users/reviews', async (req, res) => {
   }
 });
 
-router.get('/users/movies', async (req, res) => {
+router.get('/users/movies', withAuth, async (req, res) => {
   try {
     // const userData = await User.findByPk(req.session.user_id, {
     //   attributes: { exclude: ['password'] },
