@@ -20,19 +20,19 @@
         <p class='card-text'>
           With supporting text below as a natural lead-in to additional content.
         </p>
-        <!-- FOR EACH MOVIE IN USERS LIST -->
+        {{#each movies}}
         <div class='card text-center mb-3' style='width: 18rem'>
           <div class='card-body'>
-            <h5 class='card-title'>TitanicMOVIE TITLE</h5>
+            <h5 class='card-title'>{{title}}</h5>
             <img
-              src='https://m.media-amazon.com/images/I/51sBtK24saL._SX300_SY300_QL70_FMwebp_.jpg'
+              src='{{poster}}'
               class='img-fluid rounded-start'
               alt='Titantic Poster'
             />
             <a href='/reviews/new' class='btn btn-primary mt-3'>Review</a>
           </div>
         </div>
-        <!-- Ends here -->
+        {{/each}}
       </div>
     </div>
   </div>

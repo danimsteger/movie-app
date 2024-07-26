@@ -1,5 +1,5 @@
+const express = require('express')
 const router = require('express').Router();
-
 const withAuth = require('../utils/auth');
 const { Review, User, Movie } = require('../models');
 
@@ -94,24 +94,19 @@ router.get('/users/reviews', withAuth, async (req, res) => {
 });
 
 router.get('/users/movies', withAuth, async (req, res) => {
-  try {
-    // const userData = await User.findByPk(req.session.user_id, {
-    //   attributes: { exclude: ['password'] },
-    //   include: [{ model: Movie, attributes: ['title', 'id', 'imdb_movieid'] }],
-    // });
-
-    // const user = userData.get({ plain: true });
-    // res.render('myMovies', {
-    //   ...user,
-    //   logged_in: true,
-    // });
-
-    res.render('myMovies', {
-      logged_in: true,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
+    try {
+      const movies = await Movie.findAll({
+        where: {
+          user_id: req.session.user_id,
+        },
+      });
+      res.render('myMovies', {
+        movies: movies.map(movie => movie.get({ plain: true })),
+        logged_in: req.session.logged_in,
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
 });
 
 router.get('/movies/:id', async (req, res) => {
