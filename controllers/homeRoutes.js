@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
@@ -39,7 +40,7 @@ router.get('/movies/search', async (req, res) => {
   res.render('search');
 });
 
-router.get('/reviews/new', async (req, res) => {
+router.get('/reviews/new', withAuth, async (req, res) => {
   try {
     // const userData = await User.findByPk(req.session.user_id, {
     //   attributes: { exclude: ['password'] },
@@ -57,7 +58,7 @@ router.get('/reviews/new', async (req, res) => {
   }
 });
 
-router.get('/users/reviews', async (req, res) => {
+router.get('/users/reviews', withAuth, async (req, res) => {
   try {
     // const userData = await User.findByPk(req.session.user_id, {
     //   attributes: { exclude: ['password'] },
@@ -80,7 +81,7 @@ router.get('/users/reviews', async (req, res) => {
   }
 });
 
-router.get('/users/movies', async (req, res) => {
+router.get('/users/movies', withAuth, async (req, res) => {
   try {
     // const userData = await User.findByPk(req.session.user_id, {
     //   attributes: { exclude: ['password'] },
