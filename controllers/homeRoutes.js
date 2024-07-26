@@ -24,13 +24,19 @@ router.get('/', async (req, res) => {
     //   reviews,
     // });
 
-    res.render('home');
+    res.render('home', {
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 router.get('/users/login', async (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect('/users/movies');
+    return;
+  }
   res.render('login');
 });
 
@@ -42,7 +48,7 @@ router.get('/movies/search', async (req, res) => {
   res.render('search');
 });
 
-router.get('/reviews/new', withAuth, async (req, res) => {
+router.get('/reviews/new', async (req, res) => {
   try {
     // const userData = await User.findByPk(req.session.user_id, {
     //   attributes: { exclude: ['password'] },
@@ -54,7 +60,9 @@ router.get('/reviews/new', withAuth, async (req, res) => {
     //   logged_in: true,
     // });
 
-    res.render('newReview');
+    res.render('newReview', {
+      logged_in: true,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -77,7 +85,9 @@ router.get('/users/reviews', withAuth, async (req, res) => {
     //   logged_in,
     // });
 
-    res.render('myReviews');
+    res.render('myReviews', {
+      logged_in: true,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -96,7 +106,9 @@ router.get('/users/movies', withAuth, async (req, res) => {
     //   logged_in: true,
     // });
 
-    res.render('myMovies');
+    res.render('myMovies', {
+      logged_in: true,
+    });
   } catch (err) {
     res.status(500).json(err);
   }

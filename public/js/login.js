@@ -13,8 +13,10 @@ const loginFormHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace('/users/movies');
+      console.log('this worked');
     } else {
       alert(response.statusText);
+      console.log('this didnt work');
     }
   }
 };
