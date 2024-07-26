@@ -23,7 +23,7 @@ const searchMovieHandle = async (event) => {
       const OMDB_KEY = keys.OMDB_KEY;
       const WATCHMODE_KEY = keys.WATCHMODE_KEY;
       const movieResponse = await fetch(
-        `http://www.omdbapi.com/?t=${userSearch}&apikey=${OMDB_KEY}`
+        `https://www.omdbapi.com/?t=${userSearch}&apikey=${OMDB_KEY}`
       );
       if (!movieResponse.ok) throw new Error("Failed to fetch movie data");
 
