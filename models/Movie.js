@@ -14,21 +14,18 @@ Movie.init(
     imdb_movieid: {
       type: DataTypes.STRING,
     },
-    picture: {
+    poster: {
       type: DataTypes.STRING 
     },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    poster: {
-      type: DataTypes.TEXT,
-    },
     plot: {
       type: DataTypes.TEXT,
     },
     urls:{
-      type: DataTypes.TEXT,
+      type: DataTypes.JSON,
     },
     user_id: {
       type: DataTypes.INTEGER,
