@@ -3,27 +3,28 @@ const router = require('express').Router();
 const withAuth = require('../utils/auth');
 const { Review, User, Movie } = require('../models');
 
-
 router.get('/', async (req, res) => {
   try {
-    const reviewData = await Review.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-        {
-          model: Movie,
-          attributes: ['title'],
-        },
-      ],
-    });
+    // const reviewData = await Review.findAll({
+    //   include: [
+    //     {
+    //       model: User,
+    //       attributes: ['name'],
+    //     },
+    //     {
+    //       model: Movie,
+    //       attributes: ['title'],
+    //     },
+    //   ],
+    // });
 
-    const reviews = reviewData.map((review) => review.get({ plain: true }));
+    // const reviews = reviewData.map((review) => review.get({ plain: true }));
 
-    res.render('home', {
-      reviews,
-    });
+    // res.render('home', {
+    //   reviews,
+    // });
+
+    res.render('home');
   } catch (err) {
     res.status(500).json(err);
   }
