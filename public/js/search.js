@@ -57,7 +57,7 @@ const searchMovieHandle = async (event) => {
         <div class="card col-10 m-5">
           <div class="card-body row">
             <div class="col-1 d-flex align-items-center">
-              <button class="btn btn-secondary addButton">+</button>
+              <button class="btn btn-secondary addButton"data-imdbid="${movieInfo.imdbID}" data-title="${movieInfo.Title}" data-poster="${movieInfo.Poster}" data-plot ="${movieInfo.Plot}" data-urls="${streamingSources}">+</button>
             </div>
             <div class="col-2 d-flex align-items-center">
               <img
@@ -91,6 +91,33 @@ const searchMovieHandle = async (event) => {
       console.error(error);
       alert('An error occurred. Please try again.');
     }
+  }
+};
+
+const addMovieToProfile = async (event) => {
+  const imdbMovieId = event.target.getAttribute('data-imdbid');
+  const title = event.target.getAttribute('data-title');
+  const poster = event.target.getAttribute('data-poster');
+  const plot = event.target.getAttribute('data-plot');
+  const urls = event.target.getAttribute('data-urls');
+
+  try {
+    const response = await fetch('/api/movies', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ imdb_movieid: imdbMovieId, title, poster, plot, urls }),
+    });
+
+    if (response.ok) {
+      alert('Movie added to profile!');
+    } else {
+      throw new Error('Failed to add movie to profile');
+    }
+  } catch (error) {
+    console.error('Error adding movie to profile:', error);
+    alert('An error occurred. Please try again.');
   }
 };
 
