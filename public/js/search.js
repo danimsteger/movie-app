@@ -13,9 +13,9 @@ const searchMovieHandle = async (event) => {
   event.preventDefault();
 
   const userSearch = document
-    .querySelector("#movie-search")
+    .querySelector('#movie-search')
     .value.trim()
-    .replace(/\s+/g, "+");
+    .replace(/\s+/g, '+');
 
   if (userSearch) {
     try {
@@ -31,8 +31,8 @@ const searchMovieHandle = async (event) => {
       console.log(movieInfo);
 
       if (!movieInfo.imdbID) {
-        console.error("IMDB ID not found in movie data");
-        alert("Movie not found.");
+        console.error('IMDB ID not found in movie data');
+        alert('Movie not found.');
         return;
       }
 
@@ -44,7 +44,7 @@ const searchMovieHandle = async (event) => {
 
       const watchmodeData = await watchmodeResponse.json();
       console.log(watchmodeData);
-
+      
       const streamingSources = watchmodeData.slice(0, 5).map((source) => {
         return `<a href="${source.web_url}" target="_blank">${source.name}</a>`;
       });
@@ -52,11 +52,12 @@ const searchMovieHandle = async (event) => {
 
       console.log("First 5 Streaming Service URLs:", streamingSources);
 
+
       const movieCardHTML = `
         <div class="card col-10 m-5">
           <div class="card-body row">
             <div class="col-1 d-flex align-items-center">
-              <button class="btn btn-secondary">+</button>
+              <button class="btn btn-secondary addButton">+</button>
             </div>
             <div class="col-2 d-flex align-items-center">
               <img
@@ -79,19 +80,20 @@ const searchMovieHandle = async (event) => {
         </div>
       `;
 
+
       const movieContainer = document.querySelector("#movie-container");
       if (movieContainer) {
         movieContainer.innerHTML = movieCardHTML;
       } else {
-        console.error("Movie container element not found.");
+        console.error('Movie container element not found.');
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred. Please try again.");
+      alert('An error occurred. Please try again.');
     }
   }
 };
 
 document
-  .querySelector("#submitBtn")
-  .addEventListener("click", searchMovieHandle);
+  .querySelector('#submitBtn')
+  .addEventListener('click', searchMovieHandle);
