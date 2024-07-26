@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Movie, Review } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
@@ -28,10 +29,19 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const movieData = await Movie.create(req.body);
-    res.status(200).json(movieData);
+    const newMovie = await Movie.create({
+      imdb_movieid: req.body.imdb_movieid,
+      title: req.body.title,
+      poster: req.body.poster,
+      plot: req.body.plot,
+      urls: req.body.urls,
+      user_id: req.session.user_id,
+    });
+
+    res.status(200).json(newMovie);
   } catch (err) {
-    res.status(400).json(err);
+    console.error(err);
+    res.status(500).json(err);
   }
 });
 
