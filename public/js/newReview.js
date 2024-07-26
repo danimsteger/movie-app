@@ -9,6 +9,9 @@ const newReview = async (event) => {
     ).value;
     const content = document.querySelector('#reviewContent').value.trim();
 
+    console.log('rating', rating);
+    console.log('content', content);
+
     if (rating && content) {
       const response = await fetch(`/api/reviews`, {
         method: 'POST',
