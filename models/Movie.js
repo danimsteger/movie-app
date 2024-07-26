@@ -21,6 +21,15 @@ Movie.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    poster: {
+      type: DataTypes.TEXT,
+    },
+    plot: {
+      type: DataTypes.TEXT,
+    },
+    urls:{
+      type: DataTypes.TEXT,
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
