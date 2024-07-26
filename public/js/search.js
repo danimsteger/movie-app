@@ -8,7 +8,6 @@ const searchMovieHandle = async (event) => {
 
   if (userSearch) {
     try {
-      // Fetch movie data from OMDb API
       const movieResponse = await fetch(
         `http://www.omdbapi.com/?t=${userSearch}&apikey=ab862f66`
       );
@@ -23,28 +22,24 @@ const searchMovieHandle = async (event) => {
         return;
       }
 
-      // Fetch streaming sources from Watchmode API
       const watchmodeResponse = await fetch(
         `https://api.watchmode.com/v1/title/${movieInfo.imdbID}/sources/?apiKey=GlCQbCrN4AMSy6ZGxN1kzum8SALQx2A18YJSA02Q`
       );
       if (!watchmodeResponse.ok) throw new Error('Failed to fetch streaming sources');
       
       const watchmodeData = await watchmodeResponse.json();
-      console.log(watchmodeData); // Log the response to inspect
+      console.log(watchmodeData);
 
-      // Prepare streaming information: Show only the first 5 sources
       let streamingInfo = 'No streaming information available';
       if (watchmodeData && Array.isArray(watchmodeData.web_url)) {
         const streamingSources = watchmodeData.web_url;
         
-        // Limit to the first 5 sources
         const firstFiveSources = streamingSources.slice(0, 5);
         if (firstFiveSources.length > 0) {
           streamingInfo = firstFiveSources.map(source => source.provider_name).join(', ');
         }
       }
 
-      // Prepare the movie card HTML
       const movieCardHTML = `
         <div class="card col-10 m-5">
           <div class="card-body row">
@@ -71,8 +66,7 @@ const searchMovieHandle = async (event) => {
           </div>
         </div>
       `;
-
-      // Insert the movie card into the movie container
+      
       const movieContainer = document.querySelector("#movie-container");
       if (movieContainer) {
         movieContainer.innerHTML = movieCardHTML;
