@@ -2,9 +2,9 @@ const searchMovieHandle = async (event) => {
   event.preventDefault();
 
   const userSearch = document
-    .querySelector("#movie-search")
+    .querySelector('#movie-search')
     .value.trim()
-    .replace(/\s+/g, "+");
+    .replace(/\s+/g, '+');
 
   if (userSearch) {
     try {
@@ -12,31 +12,34 @@ const searchMovieHandle = async (event) => {
         `http://www.omdbapi.com/?t=${userSearch}&apikey=ab862f66`
       );
       if (!movieResponse.ok) throw new Error('Failed to fetch movie data');
-      
+
       const movieInfo = await movieResponse.json();
       console.log(movieInfo);
 
       if (!movieInfo.imdbID) {
-        console.error("IMDB ID not found in movie data");
-        alert("Movie not found.");
+        console.error('IMDB ID not found in movie data');
+        alert('Movie not found.');
         return;
       }
 
       const watchmodeResponse = await fetch(
         `https://api.watchmode.com/v1/title/${movieInfo.imdbID}/sources/?apiKey=GlCQbCrN4AMSy6ZGxN1kzum8SALQx2A18YJSA02Q`
       );
-      if (!watchmodeResponse.ok) throw new Error('Failed to fetch streaming sources');
-      
+      if (!watchmodeResponse.ok)
+        throw new Error('Failed to fetch streaming sources');
+
       const watchmodeData = await watchmodeResponse.json();
       console.log(watchmodeData);
 
       let streamingInfo = 'No streaming information available';
       if (watchmodeData && Array.isArray(watchmodeData.web_url)) {
         const streamingSources = watchmodeData.web_url;
-        
+
         const firstFiveSources = streamingSources.slice(0, 5);
         if (firstFiveSources.length > 0) {
-          streamingInfo = firstFiveSources.map(source => source.provider_name).join(', ');
+          streamingInfo = firstFiveSources
+            .map((source) => source.provider_name)
+            .join(', ');
         }
       }
 
@@ -44,7 +47,7 @@ const searchMovieHandle = async (event) => {
         <div class="card col-10 m-5">
           <div class="card-body row">
             <div class="col-1 d-flex align-items-center">
-              <button class="btn btn-secondary">+</button>
+              <button class="btn btn-secondary addButton">+</button>
             </div>
             <div class="col-2 d-flex align-items-center">
               <img
@@ -66,20 +69,20 @@ const searchMovieHandle = async (event) => {
           </div>
         </div>
       `;
-      
-      const movieContainer = document.querySelector("#movie-container");
+
+      const movieContainer = document.querySelector('#movie-container');
       if (movieContainer) {
         movieContainer.innerHTML = movieCardHTML;
       } else {
-        console.error("Movie container element not found.");
+        console.error('Movie container element not found.');
       }
     } catch (error) {
       console.error(error);
-      alert("An error occurred. Please try again.");
+      alert('An error occurred. Please try again.');
     }
   }
 };
 
 document
-  .querySelector("#submitBtn")
-  .addEventListener("click", searchMovieHandle);
+  .querySelector('#submitBtn')
+  .addEventListener('click', searchMovieHandle);
