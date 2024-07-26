@@ -1,3 +1,14 @@
+const getApiKeys = async () => {
+  try {
+    const response = await fetch("/api/keys");
+    if (!response.ok) throw new Error("Failed to fetch API keys");
+    const keys = await response.json();
+    return keys;
+  } catch (error) {
+    console.error("Error fetching API keys:", error);
+  }
+};
+
 const searchMovieHandle = async (event) => {
   event.preventDefault();
 
@@ -8,11 +19,14 @@ const searchMovieHandle = async (event) => {
 
   if (userSearch) {
     try {
+      const keys = await getApiKeys();
+      const OMDB_KEY = keys.OMDB_KEY;
+      const WATCHMODE_KEY = keys.WATCHMODE_KEY;
       const movieResponse = await fetch(
         `http://www.omdbapi.com/?t=${userSearch}&apikey=${OMDB_KEY}`
       );
-      if (!movieResponse.ok) throw new Error('Failed to fetch movie data');
-      
+      if (!movieResponse.ok) throw new Error("Failed to fetch movie data");
+
       const movieInfo = await movieResponse.json();
       console.log(movieInfo);
 
@@ -25,17 +39,18 @@ const searchMovieHandle = async (event) => {
       const watchmodeResponse = await fetch(
         `https://api.watchmode.com/v1/title/${movieInfo.imdbID}/sources/?apiKey=${WATCHMODE_KEY}`
       );
-      if (!watchmodeResponse.ok) throw new Error('Failed to fetch streaming sources');
-      
+      if (!watchmodeResponse.ok)
+        throw new Error("Failed to fetch streaming sources");
+
       const watchmodeData = await watchmodeResponse.json();
       console.log(watchmodeData);
 
-      const streamingSources = watchmodeData.slice(0, 5).map(source => {
+      const streamingSources = watchmodeData.slice(0, 5).map((source) => {
         return `<a href="${source.web_url}" target="_blank">${source.name}</a>`;
       });
-      const formattedUrls = streamingSources.join('<br>');
+      const formattedUrls = streamingSources.join("<br>");
 
-    console.log('First 5 Streaming Service URLs:', streamingSources);
+      console.log("First 5 Streaming Service URLs:", streamingSources);
 
       const movieCardHTML = `
         <div class="card col-10 m-5">
