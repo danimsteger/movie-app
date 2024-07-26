@@ -14,6 +14,9 @@ Movie.init(
     imdb_movieid: {
       type: DataTypes.STRING,
     },
+    picture: {
+      type: DataTypes.STRING 
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
