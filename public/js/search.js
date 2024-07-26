@@ -1,3 +1,14 @@
+const getApiKeys = async () => {
+  try {
+    const response = await fetch("/api/keys");
+    if (!response.ok) throw new Error("Failed to fetch API keys");
+    const keys = await response.json();
+    return keys;
+  } catch (error) {
+    console.error("Error fetching API keys:", error);
+  }
+};
+
 const searchMovieHandle = async (event) => {
   event.preventDefault();
 
@@ -8,10 +19,13 @@ const searchMovieHandle = async (event) => {
 
   if (userSearch) {
     try {
+      const keys = await getApiKeys();
+      const OMDB_KEY = keys.OMDB_KEY;
+      const WATCHMODE_KEY = keys.WATCHMODE_KEY;
       const movieResponse = await fetch(
-        `http://www.omdbapi.com/?t=${userSearch}&apikey=ab862f66`
+        `http://www.omdbapi.com/?t=${userSearch}&apikey=${OMDB_KEY}`
       );
-      if (!movieResponse.ok) throw new Error('Failed to fetch movie data');
+      if (!movieResponse.ok) throw new Error("Failed to fetch movie data");
 
       const movieInfo = await movieResponse.json();
       console.log(movieInfo);
@@ -23,25 +37,21 @@ const searchMovieHandle = async (event) => {
       }
 
       const watchmodeResponse = await fetch(
-        `https://api.watchmode.com/v1/title/${movieInfo.imdbID}/sources/?apiKey=GlCQbCrN4AMSy6ZGxN1kzum8SALQx2A18YJSA02Q`
+        `https://api.watchmode.com/v1/title/${movieInfo.imdbID}/sources/?apiKey=${WATCHMODE_KEY}`
       );
       if (!watchmodeResponse.ok)
-        throw new Error('Failed to fetch streaming sources');
+        throw new Error("Failed to fetch streaming sources");
 
       const watchmodeData = await watchmodeResponse.json();
       console.log(watchmodeData);
+      
+      const streamingSources = watchmodeData.slice(0, 5).map((source) => {
+        return `<a href="${source.web_url}" target="_blank">${source.name}</a>`;
+      });
+      const formattedUrls = streamingSources.join("<br>");
 
-      let streamingInfo = 'No streaming information available';
-      if (watchmodeData && Array.isArray(watchmodeData.web_url)) {
-        const streamingSources = watchmodeData.web_url;
+      console.log("First 5 Streaming Service URLs:", streamingSources);
 
-        const firstFiveSources = streamingSources.slice(0, 5);
-        if (firstFiveSources.length > 0) {
-          streamingInfo = firstFiveSources
-            .map((source) => source.provider_name)
-            .join(', ');
-        }
-      }
 
       const movieCardHTML = `
         <div class="card col-10 m-5">
@@ -59,7 +69,7 @@ const searchMovieHandle = async (event) => {
             <div class="col-6 m-4">
               <h3>Title: ${movieInfo.Title}</h3>
               <p>${movieInfo.Plot}</p>
-              <p>Watch Here: ${streamingInfo}</p>
+              <p>Watch Here:<br> ${formattedUrls}</p>
             </div>
             <div class="col-2 d-flex align-items-center">
               <a class="btn btn-secondary" type="button" href="/reviews/new">
@@ -70,7 +80,8 @@ const searchMovieHandle = async (event) => {
         </div>
       `;
 
-      const movieContainer = document.querySelector('#movie-container');
+
+      const movieContainer = document.querySelector("#movie-container");
       if (movieContainer) {
         movieContainer.innerHTML = movieCardHTML;
       } else {
