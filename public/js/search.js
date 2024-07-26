@@ -78,7 +78,8 @@ const searchMovieHandle = async (event) => {
               <p>Watch Here:<br> ${formattedUrls}</p>
             </div>
             <div class="col-2 d-flex align-items-center">
-              <a class="btn btn-secondary" type="button" href="/reviews/new">
+              <a class="btn btn-secondary addReview" data-title="${movieInfo.Title}"
+              data-poster="${movieInfo.Poster}" href="/reviews/new">
                 Add Review
               </a>
             </div>
@@ -123,6 +124,7 @@ const addMovieToProfile = async (event) => {
 
     if (response.ok) {
       alert("Movie added to profile!");
+      document.location.replace('/users/movies');
     } else {
       throw new Error("Failed to add movie to profile");
     }
