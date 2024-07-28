@@ -1,4 +1,16 @@
-// need to add in movie-id to make this work.
+document.addEventListener('DOMContentLoaded', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const movieId = urlParams.get('movieId');
+
+  fetch(`/api/movies/${movieId}`)
+    .then(response => response.json())
+    .then(movie => {
+      document.getElementById('movie-title').textContent = movie.title;
+      document.getElementById('movie-poster').src = movie.poster;
+      document.getElementById('movie-poster').alt = movie.title + ' Poster';
+    })
+    .catch(error => console.error('Error fetching movie details:', error));
+});
 
 const newReview = async (event) => {
   try {
