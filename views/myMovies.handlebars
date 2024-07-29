@@ -27,9 +27,9 @@
             <img
               src='{{poster}}'
               class='img-fluid rounded-start'
-              alt='Titantic Poster'
+              alt='{{title}} Poster'
             />
-            <a href='/reviews/new' class='btn btn-primary mt-3'>Review</a>
+            <a href='/reviews/new?movieId={{id}}' class='btn btn-primary mt-3'>Review</a>
           </div>
         </div>
         {{/each}}
