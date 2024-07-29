@@ -8,43 +8,41 @@
   </section>
 
   {{! This part here will be FOR EACH REVIEW!!! }}
-  <div class='card m-5 col-11'>
-    <div class='row g-0'>
-      <div class='col-md-4'>
-        <img
-          src='https://m.media-amazon.com/images/I/51sBtK24saL._SX300_SY300_QL70_FMwebp_.jpg'
-          class='img-fluid rounded-start'
-          alt='Titantic Poster'
-        />
-      </div>
-      <!-- TODO: Spacing of this is off - will adjust later -->
-      <div class='col-md-6 d-flex flex-column'>
-        <div class='card-body'>
-          <h5 class='card-title mb-3'>
-            USER'S NAME HERE - RATING HERE ⭐⭐⭐
-          </h5>
-          <p class='card-text'>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer. THIS
-            WILL CONTAIN REVIEW CONTENT HERE. for anything that a user would
-            write in a review
-          </p>
-          <p class='card-text'>
-            <a href='LINKHERE'><small class='text-body-secondary'>LINKS TO WATCH
-                HERE</small></a>
-          </p>
+  {{#each reviews as |review|}}
+    <div class='card m-5 col-11'>
+      <div class='card-header text-center'><h2>{{review.movie.title}}</h2></div>
+      <div class='row g-0'>
+        <div class='col-md-3'>
+          <a href='/movies/{{id}}'><img
+              src='{{review.movie.poster}}'
+              class='img-fluid rounded-start'
+              alt='{{review.movie.title}} Poster'
+            />
+          </a>
         </div>
-        <div
-          class='d-flex justify-content-between align-items-center'
-          style='height: 100%'
-        >
-          <div></div>
-          <!-- Would like to make it so the + button is centered on right side of card later -->
-          <button class='addButton'>+</button>
+        <!-- TODO: Spacing of this is off - will adjust later -->
+        <div class='col-md-4 d-flex flex-column mt-5' >
+          <h2>{{review_stars rating}}</h2>
+            <h3 class='card-title mb-3'>
+              {{review.user.name}} says...
+              
+            </h3>
+            <h5 class='card-text'>
+              {{review.review}}
+            </h5>
+
+          </div>
+  
+            <div class='col-md-4 d-flex flex-column mt-5'>
+              {{review.movie.plot}}
+
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  {{/each}}
 </section>
 
 <script src='/js/addMovie.js'></script>

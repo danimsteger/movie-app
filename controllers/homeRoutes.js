@@ -5,24 +5,24 @@ const { Review, User, Movie } = require('../models');
 
 router.get('/', async (req, res) => {
   try {
-    // const reviewData = await Review.findAll({
-    //   include: [
-    //     {
-    //       model: User,
-    //       attributes: ['name'],
-    //     },
-    //     {
-    //       model: Movie,
-    //       attributes: ['title'],
-    //     },
-    //   ],
-    // });
+    const reviewData = await Review.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['name'],
+        },
+        {
+          model: Movie,
+          attributes: ['title', 'poster', 'urls', 'imdb_movieid', 'id', 'plot'],
+        },
+      ],
+    });
 
-    // const reviews = reviewData.map((review) => review.get({ plain: true }));
+    const reviews = reviewData.map((review) => review.get({ plain: true }));
 
-    // res.render('home', {
-    //   reviews,
-    // });
+    res.render('home', {
+      reviews,
+    });
 
     res.render('home', {
       logged_in: req.session.logged_in,
