@@ -10,7 +10,7 @@
   {{! This part here will be FOR EACH REVIEW!!! }}
   {{#each reviews as |review|}}
     <div class='card m-5 col-11'>
-      <div class='card-header text-center pt-3'><h2>{{review.movie.title}}</h2></div>
+      <div class='card-header text-center pt-3'><h2><a href='/movies/{{review.movie.id}}'>{{review.movie.title}}</a></h2></div>
       <div class='row g-0 lighter'>
         <div class='col-md-4'>
           <a href='/movies/{{review.movie.id}}'><img

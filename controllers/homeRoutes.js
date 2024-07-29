@@ -123,7 +123,6 @@ router.get('/movies/:id', async (req, res) => {
             'rating',
             'review',
             'user_id',
-            // 'date_created'
           ],
           include: {
             model: User,
@@ -133,13 +132,17 @@ router.get('/movies/:id', async (req, res) => {
       ],
     });
 
+    console.log(movieData)
+
     const movie = await movieData.get({ plain: true });
+
+    movie.formattedUrls = movie.urls || '';
+
     res.render('movie', {
       ...movie,
       logged_in: req.session.logged_in,
     });
 
-    // res.render('movie');
   } catch (err) {
     res.status(500).json(err);
   }
