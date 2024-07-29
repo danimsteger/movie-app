@@ -32,7 +32,15 @@
         <div class='card col-9'>
           <div class='card-header d-flex justify-content-between pt-3'>
             <p>{{review.user.name}}</p>
-            <p>{{review.rating}}⭐⭐⭐</p>
+            <p>
+              <p>
+                {{review.rating}}
+                ⭐ MISSING DYNAMIC STAR INFO HERE!!
+                {{!-- {{#each (array review.rating)}}
+                  ⭐
+                {{/each}} --}}
+              </p>
+            </p>
           </div>
           <div class='card-body'>
             {{review.review}}
