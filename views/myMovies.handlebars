@@ -20,19 +20,24 @@
         <p class='card-text'>
           With supporting text below as a natural lead-in to additional content.
         </p>
-        {{#each movies}}
-        <div class='card text-center mb-3' style='width: 18rem'>
-          <div class='card-body'>
-            <h5 class='card-title'>{{title}}</h5>
-            <img
-              src='{{poster}}'
-              class='img-fluid rounded-start'
-              alt='{{title}} Poster'
-            />
-            <a href='/reviews/new?movieId={{id}}' class='btn btn-primary mt-3'>Review</a>
-          </div>
+        <div class='d-flex'>
+          {{#each movies}}
+            <div class='card text-center m-3' style='width: 18rem'>
+              <div class='card-body'>
+                <h5 class='card-title'>{{title}}</h5>
+                <img
+                  src='{{poster}}'
+                  class='img-fluid rounded-start'
+                  alt='{{title}} Poster'
+                />
+                <a
+                  href='/reviews/new?movieId={{id}}'
+                  class='btn btn-primary mt-3'
+                >Review</a>
+              </div>
+            </div>
+          {{/each}}
         </div>
-        {{/each}}
       </div>
     </div>
   </div>
