@@ -78,10 +78,6 @@ const searchMovieHandle = async (event) => {
               <p>Watch Here:<br> ${formattedUrls}</p>
             </div>
             <div class="col-2 d-flex align-items-center">
-              <a class="btn btn-secondary addReview" data-title="${movieInfo.Title}"
-              data-poster="${movieInfo.Poster}" href="/reviews/new">
-                Add Review
-              </a>
             </div>
           </div>
         </div>
@@ -107,6 +103,7 @@ const addMovieToProfile = async (event) => {
   const plot = event.target.getAttribute("data-plot");
   const urls = decodeURIComponent(event.target.getAttribute("data-urls"));
 
+  
   try {
     const response = await fetch("/api/movies", {
       method: "POST",
@@ -130,7 +127,7 @@ const addMovieToProfile = async (event) => {
     }
   } catch (error) {
     console.error("Error adding movie to profile:", error);
-    alert("An error occurred. Please try again.");
+    alert("Movie already exist in profile");
   }
 };
 
