@@ -27,15 +27,38 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+const checkMovieExists = async (userId, imdbMovieId) => {
   try {
+    const movie = await Movie.findOne({
+      where: {
+        user_id: userId,
+        imdb_movieid: imdbMovieId,
+      },
+    });
+    return !!movie;
+  } catch (error) {
+    console.error("Error checking if movie exists:", error);
+    return false;
+  }
+};
+
+router.post('/', async (req, res) => {
+  const { imdb_movieid, title, poster, plot, urls } = req.body;
+  const user_id = req.session.user_id;
+
+  try {
+    const movieExists = await checkMovieExists(user_id, imdb_movieid);
+    if (movieExists) {
+      return res.status(400).json({ message: 'This movie is already in your profile.' });
+  }
+
     const newMovie = await Movie.create({
-      imdb_movieid: req.body.imdb_movieid,
-      title: req.body.title,
-      poster: req.body.poster,
-      plot: req.body.plot,
-      urls: req.body.urls,
-      user_id: req.session.user_id,
+      imdb_movieid: imdb_movieid,
+      title: title,
+      poster: poster,
+      plot: plot,
+      urls: urls,
+      user_id: user_id,
     });
 
     res.status(200).json(newMovie);
