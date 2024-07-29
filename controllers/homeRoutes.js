@@ -95,6 +95,7 @@ router.get('/users/movies', withAuth, async (req, res) => {
       where: {
         user_id: req.session.user_id,
       },
+      order: [['id', 'DESC']],
     });
     res.render('myMovies', {
       movies: movies.map((movie) => movie.get({ plain: true })),
