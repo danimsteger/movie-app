@@ -78,6 +78,7 @@ router.get('/users/reviews', withAuth, async (req, res) => {
           attributes: ['title', 'id', 'imdb_movieid', 'poster', 'urls', 'plot'],
         },
       ],
+      order: [['date_created', 'DESC']],
     });
 
     res.render('myReviews', {
