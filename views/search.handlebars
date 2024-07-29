@@ -1,23 +1,29 @@
-<section id='search-page' class='row justify-content-center d-flex'>
-  <form class='form new-movie-search'>
-    <div class='col-10 d-flex'>
-      <div class='m-5 col-8'>
-        <label for='movie-search' class='form-label'>Search for movie:</label>
-        <input
-          class='form-input'
-          type='text'
-          id='movie-search'
-          name='movie-search'
-        />
-      </div>
-      <button
-        type='click'
-        id='submitBtn'
-        class='btn btn-primary col-2 m-5'
-      >Search</button>
+<section id='search-page' class='justify-content-center d-flex'>
+  <div class='card mt-5 col-10'>
+    <div class='card-header'>
     </div>
-  </form>
 
+    <div class='card-body'>
+      <form class='form new-movie-search'>
+        <div class='col-10 d-flex justify-content-between my-5'>
+          <div class='col-7'>
+            <label for='movie-search' class='form-label ml-5'>Search for movie:</label>
+            <input
+              class='form-input'
+              type='text'
+              id='movie-search'
+              name='movie-search'
+            />
+          </div>
+          <button
+            type='click'
+            id='submitBtn'
+            class='btn btn-primary col-2'
+          >Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <div id='movie-container'>
   </div>
 </section>

@@ -1,0 +1,48 @@
+:root {
+  --darkest: #254336;
+  --dark: #6b8a7a;
+  --light: #b7b597;
+  --lighter: #dad3be;
+  --lightest: #ebf3e8;
+}
+
+.navbar {
+  background-color: var(--darkest) !important;
+}
+
+.nav-link {
+  color: var(--lighter);
+}
+
+.navbar-toggler {
+  color: var(--darkest);
+  background-color: var(--lighter);
+}
+
+.navbar-toggler-icon {
+  background-color: var(--lighter);
+}
+.navbar-brand {
+  color: var(--lighter);
+}
+
+body {
+  background-color: var(--light) !important;
+}
+
+.btn-secondary {
+  background-color: var(--dark);
+  color: var(--lighter);
+  --bs-btn-hover-color: var(--light);
+  --bs-btn-hover-bg: var(--darkest);
+}
+
+.card-header {
+  background-color: var(--dark);
+  color: var(--darkest);
+}
+
+.lighter {
+  background-color: var(--lighter);
+  color: var(--darkest);
+}
