@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const router = require('express').Router();
 const withAuth = require('../utils/auth');
 const { Review, User, Movie } = require('../models');
@@ -94,43 +94,52 @@ router.get('/users/reviews', withAuth, async (req, res) => {
 });
 
 router.get('/users/movies', withAuth, async (req, res) => {
-    try {
-      const movies = await Movie.findAll({
-        where: {
-          user_id: req.session.user_id,
-        },
-      });
-      res.render('myMovies', {
-        movies: movies.map(movie => movie.get({ plain: true })),
-        logged_in: req.session.logged_in,
-      });
-    } catch (err) {
-      res.status(500).json(err);
-    }
+  try {
+    const movies = await Movie.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
+    });
+    res.render('myMovies', {
+      movies: movies.map((movie) => movie.get({ plain: true })),
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 router.get('/movies/:id', async (req, res) => {
   try {
-    // const movieData = await Movie.findByPk(req.params.id, {
-    //   include: [
-    //     {
-    //       model: User,
-    //       attributes: ['name'],
-    //     },
-    //     {
-    //       model: Review,
-    //       attributes: ['rating', 'review', 'date_created'],
-    //     },
-    //   ],
-    // });
+    const movieData = await Movie.findByPk(req.params.id, {
+      include: [
+        // {
+        //   model: User,
+        //   attributes: ['name'],
+        // },
+        {
+          model: Review,
+          attributes: [
+            'rating',
+            'review',
+            'user_id',
+            // 'date_created'
+          ],
+          include: {
+            model: User,
+            attributes: ['name'],
+          },
+        },
+      ],
+    });
 
-    // const movie = await movieData.get({ plain: true });
-    // res.render('movie', {
-    //   ...movie,
-    //   logged_in: req.session.logged_in,
-    // });
+    const movie = await movieData.get({ plain: true });
+    res.render('movie', {
+      ...movie,
+      logged_in: req.session.logged_in,
+    });
 
-    res.render('movie');
+    // res.render('movie');
   } catch (err) {
     res.status(500).json(err);
   }
