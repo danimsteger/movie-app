@@ -1,35 +1,35 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const urlParams = new URLSearchParams(window.location.search);
   const movieId = urlParams.get('movieId');
 
   fetch(`/api/movies/${movieId}`)
-    .then(response => response.json())
-    .then(movie => {
+    .then((response) => response.json())
+    .then((movie) => {
       document.getElementById('movie-title').textContent = movie.title;
       document.getElementById('movie-poster').src = movie.poster;
       document.getElementById('movie-poster').alt = movie.title + ' Poster';
     })
-    .catch(error => console.error('Error fetching movie details:', error));
+    .catch((error) => console.error('Error fetching movie details:', error));
 });
 
 const newReview = async (event) => {
   try {
     event.preventDefault();
-
+    console.log('step 1');
     const rating = document.querySelector(
       'input[name ="ratingOptions"]:checked'
     ).value;
     const content = document.querySelector('#reviewContent').value.trim();
-
-    console.log('rating', rating);
-    console.log('content', content);
+    const urlParams = new URLSearchParams(window.location.search);
+    const movie_id = urlParams.get('movieId');
 
     if (rating && content) {
       const response = await fetch(`/api/reviews`, {
         method: 'POST',
         body: JSON.stringify({
           rating,
-          content,
+          review: content,
+          movie_id: movie_id,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const newReview = async (event) => {
       });
 
       if (response.ok) {
-        document.location.replace('/');
+        document.location.replace(`/movies/${movie_id}`);
       } else {
         alert('Failed to add Review');
       }
