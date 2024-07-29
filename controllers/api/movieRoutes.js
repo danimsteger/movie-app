@@ -42,7 +42,7 @@ const checkMovieExists = async (userId, imdbMovieId) => {
   }
 };
 
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
   const { imdb_movieid, title, poster, plot, urls } = req.body;
   const user_id = req.session.user_id;
 

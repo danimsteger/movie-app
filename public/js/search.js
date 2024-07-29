@@ -103,7 +103,10 @@ const addMovieToProfile = async (event) => {
   const plot = event.target.getAttribute("data-plot");
   const urls = decodeURIComponent(event.target.getAttribute("data-urls"));
 
-  
+  if (!loggedIn) {
+    document.location.replace('/users/login')
+  }
+  else{
   try {
     const response = await fetch("/api/movies", {
       method: "POST",
@@ -118,17 +121,20 @@ const addMovieToProfile = async (event) => {
         urls,
       }),
     });
-
+  
     if (response.ok) {
+      console.log('logged in')
       alert("Movie added to profile!");
       document.location.replace('/users/movies');
-    } else {
+    } 
+    else {
       throw new Error("Failed to add movie to profile");
     }
   } catch (error) {
     console.error("Error adding movie to profile:", error);
     alert("Movie already exist in profile");
   }
+}
 };
 
 document
