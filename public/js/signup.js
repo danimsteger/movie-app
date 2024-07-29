@@ -4,26 +4,36 @@ const signupFormHandler = async (event) => {
   const name = document.querySelector('#inputName').value.trim();
   const email = document.querySelector('#inputEmail').value.trim();
   const password = document.querySelector('#inputPassword').value.trim();
-try{
+
+  if (name && email && password) {
     const response = await fetch('/api/users', {
       method: 'POST',
       body: JSON.stringify({ name, email, password }),
       headers: { 'Content-Type': 'application/json' },
     });
-    
+
     if (response.ok) {
-      alert('account created')
-      document.location.replace('/users/movies');
+      if (email && password) {
+        const response = await fetch('/api/users/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+    
+        if (response.ok) {
+          document.location.replace('/users/movies');
+          console.log('this worked');
+        } else {
+          alert(response.statusText);
+          console.log('this didnt work');
+        }
+      }
     } else {
-      throw new Error("Failed to sign up");
+      alert(response.statusText);
     }
   }
-  catch (error) {
-    console.error("Error adding movie to profile:", error);
-    alert("Movie already exist in profile");
-  }
-}
-;
+};
+
 document
   .querySelector('.signup-form')
   .addEventListener('submit', signupFormHandler);
