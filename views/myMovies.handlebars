@@ -15,25 +15,25 @@
           </li>
         </ul>
       </div>
-      <div class='card-body'>
+      <div class='card-body lighter'>
         <h4 class='card-text'>
           View all your added movies here. Add reviews to your movies for all to
           see!
         </h4>
         <div class='d-flex flex-wrap mx-4 justify-content-center'>
           {{#each movies}}
-            <div class='card text-center m-3' style='width: 18rem'>
-              <div class='card-body'>
-                <h5 class='card-title'>{{title}}</h5>
+            <div class='card rounded text-center m-3' style='width: 18rem'>
+              <div class='card-body darker'>
+                <h5 class='card-header'>{{title}}</h5>
                 <a href='/movies/{{id}}'><img
                     src='{{poster}}'
-                    class='img-fluid rounded-start'
+                    class='img-fluid rounded'
                     alt='{{title}} Poster'
                   />
                 </a>
                 <a
                   href='/reviews/new?movieId={{id}}'
-                  class='btn btn-primary mt-3'
+                  class='btn btn-secondary mt-3'
                 >Review</a>
               </div>
             </div>
