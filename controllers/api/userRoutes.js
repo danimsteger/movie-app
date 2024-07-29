@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const userData = await User.create(req.body);
-    res.status(200).json(userData);
+    res.status(201).json(userData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -41,14 +41,12 @@ router.post('/login', async (req, res) => {
     if (!userData) {
       res.status(400).json({ message: 'Incorrect email, please try again' });
       console.log('this email isnt right');
-      return;
     }
 
     const validPassword = await userData.checkPassword(req.body.password);
 
     if (!validPassword) {
       res.status(400).json({ message: 'Incorrect password, please try again' });
-      return;
     }
     req.session.save(() => {
       req.session.user_id = userData.id;

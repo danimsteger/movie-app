@@ -43,7 +43,9 @@ router.get('/users/signup', async (req, res) => {
 });
 
 router.get('/movies/search', async (req, res) => {
-  res.render('search');
+  res.render('search', {
+    logged_in: req.session.logged_in,
+  });
 });
 
 router.get('/reviews/new', async (req, res) => {

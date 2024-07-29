@@ -1,11 +1,11 @@
 const getApiKeys = async () => {
   try {
-    const response = await fetch('/api/keys');
-    if (!response.ok) throw new Error('Failed to fetch API keys');
+    const response = await fetch("/api/keys");
+    if (!response.ok) throw new Error("Failed to fetch API keys");
     const keys = await response.json();
     return keys;
   } catch (error) {
-    console.error('Error fetching API keys:', error);
+    console.error("Error fetching API keys:", error);
   }
 };
 
@@ -13,9 +13,9 @@ const searchMovieHandle = async (event) => {
   event.preventDefault();
 
   const userSearch = document
-    .querySelector('#movie-search')
+    .querySelector("#movie-search")
     .value.trim()
-    .replace(/\s+/g, '+');
+    .replace(/\s+/g, "+");
 
   if (userSearch) {
     try {
@@ -25,14 +25,14 @@ const searchMovieHandle = async (event) => {
       const movieResponse = await fetch(
         `https://www.omdbapi.com/?t=${userSearch}&apikey=${OMDB_KEY}`
       );
-      if (!movieResponse.ok) throw new Error('Failed to fetch movie data');
+      if (!movieResponse.ok) throw new Error("Failed to fetch movie data");
 
       const movieInfo = await movieResponse.json();
       console.log(movieInfo);
 
       if (!movieInfo.imdbID) {
-        console.error('IMDB ID not found in movie data');
-        alert('Movie not found.');
+        console.error("IMDB ID not found in movie data");
+        alert("Movie not found.");
         return;
       }
 
@@ -40,7 +40,7 @@ const searchMovieHandle = async (event) => {
         `https://api.watchmode.com/v1/title/${movieInfo.imdbID}/sources/?apiKey=${WATCHMODE_KEY}`
       );
       if (!watchmodeResponse.ok)
-        throw new Error('Failed to fetch streaming sources');
+        throw new Error("Failed to fetch streaming sources");
 
       const watchmodeData = await watchmodeResponse.json();
       console.log(watchmodeData);
@@ -48,15 +48,15 @@ const searchMovieHandle = async (event) => {
       const streamingSources = watchmodeData.slice(0, 5).map((source) => {
         return `<a href="${source.web_url}" target="_blank">${source.name}</a>`;
       });
-      const formattedUrls = streamingSources.join('<br>');
+      const formattedUrls = streamingSources.join("<br>");
 
-      console.log('First 5 Streaming Service URLs:', streamingSources);
+      console.log("First 5 Streaming Service URLs:", streamingSources);
 
       const movieCardHTML = `
-        <div class="card rounded col-10 m-5">
-          <div class="card-body lighter row">
+        <div class="card col-10 m-5">
+          <div class="card-body row">
             <div class="col-1 d-flex align-items-center">
-              <button class="btn ml-4 btn-secondary addButton"
+              <button class="btn btn-secondary addButton"
               data-imdbid="${movieInfo.imdbID}"
               data-title="${movieInfo.Title}"
               data-poster="${movieInfo.Poster}"
@@ -66,15 +66,14 @@ const searchMovieHandle = async (event) => {
               )}">+</button>
             </div>
             <div class="col-2 d-flex align-items-center">
-             <img
+              <img
                 src="${movieInfo.Poster}"
-                class="img-fluid rounded"
+                class="img-fluid rounded-start"
                 alt="${movieInfo.Title} Poster"
               />
-             
             </div>
             <div class="col-6 m-4">
-              <h3>${movieInfo.Title}</h3>
+              <h3>Title: ${movieInfo.Title}</h3>
               <p>${movieInfo.Plot}</p>
               <p>Watch Here:<br> ${formattedUrls}</p>
             </div>
@@ -84,31 +83,35 @@ const searchMovieHandle = async (event) => {
         </div>
       `;
 
-      const movieContainer = document.querySelector('#movie-container');
+      const movieContainer = document.querySelector("#movie-container");
       if (movieContainer) {
         movieContainer.innerHTML = movieCardHTML;
       } else {
-        console.error('Movie container element not found.');
+        console.error("Movie container element not found.");
       }
     } catch (error) {
       console.error(error);
-      alert('An error occurred. Please try again.');
+      alert("An error occurred. Please try again.");
     }
   }
 };
 
 const addMovieToProfile = async (event) => {
-  const imdbMovieId = event.target.getAttribute('data-imdbid');
-  const title = event.target.getAttribute('data-title');
-  const poster = event.target.getAttribute('data-poster');
-  const plot = event.target.getAttribute('data-plot');
-  const urls = decodeURIComponent(event.target.getAttribute('data-urls'));
+  const imdbMovieId = event.target.getAttribute("data-imdbid");
+  const title = event.target.getAttribute("data-title");
+  const poster = event.target.getAttribute("data-poster");
+  const plot = event.target.getAttribute("data-plot");
+  const urls = decodeURIComponent(event.target.getAttribute("data-urls"));
 
+  if (!loggedIn) {
+    document.location.replace('/users/login')
+  }
+  else{
   try {
-    const response = await fetch('/api/movies', {
-      method: 'POST',
+    const response = await fetch("/api/movies", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         imdb_movieid: imdbMovieId,
@@ -118,27 +121,30 @@ const addMovieToProfile = async (event) => {
         urls,
       }),
     });
-
+  
     if (response.ok) {
-      alert('Movie added to profile!');
+      console.log('logged in')
+      alert("Movie added to profile!");
       document.location.replace('/users/movies');
-    } else {
-      throw new Error('Failed to add movie to profile');
+    } 
+    else {
+      throw new Error("Failed to add movie to profile");
     }
   } catch (error) {
-    console.error('Error adding movie to profile:', error);
-    alert('Movie already exist in profile');
+    console.error("Error adding movie to profile:", error);
+    alert("Movie already exist in profile");
   }
+}
 };
 
 document
-  .querySelector('#submitBtn')
-  .addEventListener('click', searchMovieHandle);
+  .querySelector("#submitBtn")
+  .addEventListener("click", searchMovieHandle);
 
-document
-  .querySelector('#movie-container')
-  .addEventListener('click', (event) => {
-    if (event.target.classList.contains('addButton')) {
+  document
+  .querySelector("#movie-container")
+  .addEventListener("click", (event) => {
+    if (event.target.classList.contains("addButton")) {
       addMovieToProfile(event);
     }
   });

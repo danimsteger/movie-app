@@ -13,7 +13,21 @@ const signupFormHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.replace('/users/movies');
+      if (email && password) {
+        const response = await fetch('/api/users/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password }),
+          headers: { 'Content-Type': 'application/json' },
+        });
+    
+        if (response.ok) {
+          document.location.replace('/users/movies');
+          console.log('this worked');
+        } else {
+          alert(response.statusText);
+          console.log('this didnt work');
+        }
+      }
     } else {
       alert(response.statusText);
     }
