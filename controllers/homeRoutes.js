@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
           attributes: ['title', 'poster', 'urls', 'imdb_movieid', 'id', 'plot'],
         },
       ],
+      order: [['date_created', 'DESC']],
     });
 
     const reviews = reviewData.map((review) => review.get({ plain: true }));
