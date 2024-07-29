@@ -25,11 +25,12 @@
             <div class='card text-center m-3' style='width: 18rem'>
               <div class='card-body'>
                 <h5 class='card-title'>{{title}}</h5>
-                <img
-                  src='{{poster}}'
-                  class='img-fluid rounded-start'
-                  alt='{{title}} Poster'
-                />
+                <a href='/movies/{{id}}'><img
+                    src='{{poster}}'
+                    class='img-fluid rounded-start'
+                    alt='{{title}} Poster'
+                  />
+                </a>
                 <a
                   href='/reviews/new?movieId={{id}}'
                   class='btn btn-primary mt-3'
