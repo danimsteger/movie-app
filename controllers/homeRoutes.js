@@ -71,23 +71,21 @@ router.get('/reviews/new', async (req, res) => {
 
 router.get('/users/reviews', withAuth, async (req, res) => {
   try {
-    // const userData = await User.findByPk(req.session.user_id, {
-    //   attributes: { exclude: ['password'] },
-    //   include: [
-    //     { model: Movie, attributes: ['title', 'id', 'imdb_movieid'] },
-    //     { model: Review, attributes: ['rating', 'review', 'movie_id'] },
-    //   ],
-    // });
-
-    // const user = userData.get({ plain: true });
-
-    // res.render('myReviews', {
-    //   ...user,
-    //   logged_in,
-    // });
+    const reviews = await Review.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
+      include: [
+        {
+          model: Movie,
+          attributes: ['title', 'id', 'imdb_movieid', 'poster', 'urls', 'plot'],
+        },
+      ],
+    });
 
     res.render('myReviews', {
-      logged_in: true,
+      reviews: reviews.map((review) => review.get({ plain: true })),
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
