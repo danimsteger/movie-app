@@ -10,30 +10,34 @@
   {{! This part here will be FOR EACH REVIEW!!! }}
   {{#each reviews as |review|}}
     <div class='card m-5 col-11'>
-      <div class='card-header text-center'><h2>{{review.movie.title}}</h2></div>
-      <div class='row g-0'>
-        <div class='col-md-3'>
+      <div class='card-header text-center pt-3'><h2>{{review.movie.title}}</h2></div>
+      <div class='row g-0 lighter'>
+        <div class='col-md-4'>
           <a href='/movies/{{review.movie.id}}'><img
               src='{{review.movie.poster}}'
-              class='img-fluid rounded-start'
+              class='img-fluid rounded m-2'
               alt='{{review.movie.title}} Poster'
             />
           </a>
         </div>
         <!-- TODO: Spacing of this is off - will adjust later -->
-        <div class='col-md-4 d-flex flex-column mt-5' >
-          <h2>{{review_stars rating}}</h2>
-            <h3 class='card-title mb-3'>
+        <div class='col-md-4 d-flex mt-5 flex-column ' >
+          <div class="row mx-2">
+            <h2 class="">{{review_stars rating}}</h2>
+            <h3 class='card-title '>
               {{review.user.name}} says...
               
-            </h3>
-            <h5 class='card-text'>
+              </h3>
+            </div>
+            <div class="row mx-2">
+            <h5 class='card-text my-5'>
               {{review.review}}
             </h5>
+            </div>
 
           </div>
   
-            <div class='col-md-4 d-flex flex-column mt-5'>
+            <div class='col-md-3 d-flex flex-column mt-5 mx-2'>
               {{review.movie.plot}}
 
             </div>

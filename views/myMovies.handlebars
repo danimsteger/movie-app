@@ -1,6 +1,6 @@
 <section>
-  <div>
-    <div class='card text-center col-11'>
+  <div class='d-flex justify-content-center'>
+    <div class='card text-center col-11 m-4'>
       <div class='card-header'>
         <ul class='nav nav-tabs card-header-tabs'>
           <li class='nav-item'>
@@ -15,24 +15,25 @@
           </li>
         </ul>
       </div>
-      <div class='card-body'>
-        <h5 class='card-title'>All Added Movies Here!</h5>
-        <p class='card-text'>
-          With supporting text below as a natural lead-in to additional content.
-        </p>
-        <div class='d-flex'>
+      <div class='card-body lighter'>
+        <h4 class='card-text'>
+          View all your added movies here. Add reviews to your movies for all to
+          see!
+        </h4>
+        <div class='d-flex flex-wrap mx-4 justify-content-center'>
           {{#each movies}}
-            <div class='card text-center m-3' style='width: 18rem'>
-              <div class='card-body'>
-                <h5 class='card-title'>{{title}}</h5>
-                <img
-                  src='{{poster}}'
-                  class='img-fluid rounded-start'
-                  alt='{{title}} Poster'
-                />
+            <div class='card rounded text-center m-3' style='width: 18rem'>
+              <div class='card-body darker'>
+                <h5 class='card-header'>{{title}}</h5>
+                <a href='/movies/{{id}}'><img
+                    src='{{poster}}'
+                    class='img-fluid rounded'
+                    alt='{{title}} Poster'
+                  />
+                </a>
                 <a
                   href='/reviews/new?movieId={{id}}'
-                  class='btn btn-primary mt-3'
+                  class='btn btn-secondary mt-3'
                 >Review</a>
               </div>
             </div>

@@ -80,6 +80,7 @@ router.get('/users/reviews', withAuth, async (req, res) => {
           attributes: ['title', 'id', 'imdb_movieid', 'poster', 'urls', 'plot'],
         },
       ],
+      order: [['date_created', 'DESC']],
     });
 
     res.render('myReviews', {
@@ -97,6 +98,7 @@ router.get('/users/movies', withAuth, async (req, res) => {
       where: {
         user_id: req.session.user_id,
       },
+      order: [['id', 'DESC']],
     });
     res.render('myMovies', {
       movies: movies.map((movie) => movie.get({ plain: true })),

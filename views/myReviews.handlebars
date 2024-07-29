@@ -1,6 +1,6 @@
 <section>
-  <div>
-    <div class='card text-center col-11'>
+  <div class='d-flex justify-content-center'>
+    <div class='card text-center col-11 m-4'>
       <div class='card-header'>
         <ul class='nav nav-tabs card-header-tabs'>
           <li class='nav-item'>
@@ -12,11 +12,10 @@
           </li>
         </ul>
       </div>
-      <div class='card-body'>
-        <h5 class='card-title'>All Movie Reviews Here</h5>
-        <p class='card-text'>
-          With supporting text below as a natural lead-in to additional content.
-        </p>
+      <div class='card-body lighter'>
+        <h4 class='card-text'>
+          View all your movie reviews here. Edit or delete them, too!
+        </h4>
         <div class='d-flex flex-wrap'>
           {{#each reviews as |review|}}
             <div class='card m-5 col-5'>
@@ -25,7 +24,7 @@
                 >{{review.movie.title}}</h2>
                 <h2>{{review_stars rating}}</h2>
               </div>
-              <div class='row'>
+              <div class='row card-body dark'>
                 <div class='col-md-6 d-flex'>
                   <a href='/movies/{{review.movie.id}}'><img
                       src='{{review.movie.poster}}'
@@ -42,7 +41,7 @@
                   </div>
                   <div class='row d-flex my-5'>
                     <button class='btn btn-primary m-2'>DELETE</button>
-                    <button class='btn btn-secondary m-2'>EDIT</button>
+
                   </div>
                 </div>
               </div>
