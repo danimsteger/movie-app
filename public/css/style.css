@@ -8,6 +8,7 @@
 
 .navbar {
   background-color: var(--darkest) !important;
+  --bs-navbar-brand-hover-color: var(--dark);
 }
 
 .nav-link {
@@ -24,6 +25,21 @@
 }
 .navbar-brand {
   color: var(--lighter);
+  --bs-nav-link-hover-color: var(--dark) !important;
+}
+
+.navbar-nav {
+  --bs-nav-link-padding-x: 0;
+  --bs-nav-link-padding-y: 0.5rem;
+  --bs-nav-link-font-weight: ;
+  --bs-nav-link-color: var(--bs-navbar-color);
+  --bs-nav-link-hover-color: var(--dark) !important;
+  --bs-nav-link-disabled-color: var(--bs-navbar-disabled-color);
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
 }
 
 body {
@@ -107,4 +123,13 @@ a {
 
 .thick {
   border: solid var(--darkest) 10px;
+}
+
+a:hover {
+  color: var(--darkest);
+}
+
+img:hover {
+  /* border: solid var(--darkest) 4px; */
+  box-shadow: 0 0 10px var(--darkest);
 }

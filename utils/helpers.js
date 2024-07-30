@@ -15,4 +15,8 @@ module.exports = {
     }
     return stars;
   },
+  formattedUrls: (formattedUrls) => {
+    let urlsArray = JSON.parse(formattedUrls);
+    return urlsArray.join('<br>');
+  },
 };
