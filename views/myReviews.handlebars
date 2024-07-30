@@ -1,3 +1,4 @@
+{{! My reviews page displays all reviews for the logged-in user }}
 <section>
   <div class='d-flex justify-content-center'>
     <div class='card text-center col-11 m-4'>
@@ -17,8 +18,12 @@
           View all your movie reviews here. You can delete them, too!
         </h4>
         <div class='d-flex flex-wrap justify-content-center'>
+
+          {{! Creates a card for each review for that user }}
           {{#each reviews as |review|}}
             <div class='card m-5 col-4 thick'>
+
+              {{! Card displays the movies title, poster, review content, and stars for rating }}
               <div class='card-header d-flex justify-content-between'><h2
                   class='ml-4'
                 >{{review.movie.title}}</h2>
@@ -26,6 +31,7 @@
               </div>
               <div class='row card-body dark'>
                 <div class='col-md-6 d-flex'>
+                  {{! Movie poster image links to individual movie page }}
                   <a href='/movies/{{review.movie.id}}'><img
                       src='{{review.movie.poster}}'
                       class='img-fluid rounded-start'
@@ -40,6 +46,7 @@
                     </h5>
                   </div>
                   <div class='row d-flex my-5'>
+                    {{! Delete button allows a user to delete the review from the database }}
                     <button
                       class='btn btn-primary m-2 dlt-btn'
                       data-reviewId='{{review.id}}'
@@ -54,7 +61,7 @@
         </div>
       </div>
     </div>
-    <!-- // Ends here  -->
+
   </div>
 
 </section>

@@ -1,3 +1,5 @@
+-- Sample seed data used for initial creating and testing
+
 \c movies_db;
 
 INSERT INTO "user" (name, email, password)

@@ -3,6 +3,7 @@ const router = require('express').Router();
 const withAuth = require('../utils/auth');
 const { Review, User, Movie } = require('../models');
 
+// Gets model information for homepage to display 'home' handlebars view
 router.get('/', async (req, res) => {
   try {
     const reviewData = await Review.findAll({
@@ -30,6 +31,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Displays 'login' page if users are not logged in. Displays /users/movies if they are
 router.get('/users/login', async (req, res) => {
   if (req.session.logged_in) {
     res.redirect('/users/movies');
@@ -38,28 +40,21 @@ router.get('/users/login', async (req, res) => {
   res.render('login');
 });
 
+// Displays 'signup' page
 router.get('/users/signup', async (req, res) => {
   res.render('signup');
 });
 
+// Displays 'search' page
 router.get('/movies/search', async (req, res) => {
   res.render('search', {
     logged_in: req.session.logged_in,
   });
 });
 
+// Displays 'newReview' page
 router.get('/reviews/new', async (req, res) => {
   try {
-    // const userData = await User.findByPk(req.session.user_id, {
-    //   attributes: { exclude: ['password'] },
-    // });
-
-    // const user = userData.get({ plain: true });
-    // res.render('newReview', {
-    //   ...user,
-    //   logged_in: true,
-    // });
-
     res.render('newReview', {
       logged_in: true,
     });
@@ -68,6 +63,7 @@ router.get('/reviews/new', async (req, res) => {
   }
 });
 
+// Checks if a user is logged in and gets review information for the logged-in user to display 'myReviews' page
 router.get('/users/reviews', withAuth, async (req, res) => {
   try {
     const reviews = await Review.findAll({
@@ -92,6 +88,7 @@ router.get('/users/reviews', withAuth, async (req, res) => {
   }
 });
 
+// Checks if a user is logged in and gets movie information for the logged-in user to display 'myMovies' page
 router.get('/users/movies', withAuth, async (req, res) => {
   try {
     const movies = await Movie.findAll({
@@ -109,6 +106,7 @@ router.get('/users/movies', withAuth, async (req, res) => {
   }
 });
 
+// Gets movie and corresponding review information for a movie by id to display the individual 'movie' page
 router.get('/movies/:id', async (req, res) => {
   try {
     const movie = await Movie.findByPk(req.params.id);
@@ -119,10 +117,6 @@ router.get('/movies/:id', async (req, res) => {
         imdb_movieid: imdb_movieid,
       },
       include: [
-        // {
-        //   model: User,
-        //   attributes: ['name'],
-        // },
         {
           model: Review,
           attributes: ['rating', 'review', 'user_id'],

@@ -3,6 +3,8 @@ const Movie = require('./Movie');
 const Review = require('./Review');
 const MovieWatched = require('./MovieWatched');
 
+// Sets up model relationships
+
 Review.belongsTo(User, {
   foreignKey: 'user_id',
 });
@@ -24,19 +26,18 @@ Movie.hasMany(Review, {
 Movie.belongsToMany(User, {
   through: {
     model: MovieWatched,
-    unique: false
+    unique: false,
   },
-  as: 'watched_movies'
+  as: 'watched_movies',
 });
 
 User.belongsToMany(Movie, {
   through: {
     model: MovieWatched,
-    unique: false
+    unique: false,
   },
-  as: 'user_watched'
+  as: 'user_watched',
 });
-
 
 module.exports = {
   User,
@@ -44,4 +45,3 @@ module.exports = {
   Review,
   MovieWatched,
 };
-

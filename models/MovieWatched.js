@@ -4,13 +4,15 @@ const sequelize = require('../config/connection');
 
 class MovieWatched extends Model {}
 
+// Sets up MovieWatched model
+
 MovieWatched.init(
   {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -18,8 +20,8 @@ MovieWatched.init(
       references: {
         model: 'user',
         key: 'id',
-        unique: false
-      }
+        unique: false,
+      },
     },
     movie_id: {
       type: DataTypes.INTEGER,
@@ -27,8 +29,8 @@ MovieWatched.init(
       references: {
         model: 'movie',
         key: 'id',
-        unique: false
-      }
+        unique: false,
+      },
     },
   },
   {

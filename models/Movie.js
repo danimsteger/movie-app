@@ -3,6 +3,8 @@ const sequelize = require('../config/connection');
 
 class Movie extends Model {}
 
+// Sets up movie model
+
 Movie.init(
   {
     id: {
@@ -15,7 +17,7 @@ Movie.init(
       type: DataTypes.STRING,
     },
     poster: {
-      type: DataTypes.STRING 
+      type: DataTypes.STRING,
     },
     title: {
       type: DataTypes.STRING,
@@ -24,7 +26,7 @@ Movie.init(
     plot: {
       type: DataTypes.TEXT,
     },
-    urls:{
+    urls: {
       type: DataTypes.JSON,
     },
     user_id: {
