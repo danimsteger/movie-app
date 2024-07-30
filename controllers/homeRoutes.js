@@ -111,7 +111,13 @@ router.get('/users/movies', withAuth, async (req, res) => {
 
 router.get('/movies/:id', async (req, res) => {
   try {
-    const movieData = await Movie.findByPk(req.params.id, {
+    const movie = await Movie.findByPk(req.params.id);
+    const imdb_movieid = movie.imdb_movieid;
+
+    const moviesData = await Movie.findAll({
+      where: {
+        imdb_movieid: imdb_movieid,
+      },
       include: [
         // {
         //   model: User,
@@ -119,11 +125,7 @@ router.get('/movies/:id', async (req, res) => {
         // },
         {
           model: Review,
-          attributes: [
-            'rating',
-            'review',
-            'user_id',
-          ],
+          attributes: ['rating', 'review', 'user_id'],
           include: {
             model: User,
             attributes: ['name'],
@@ -132,15 +134,18 @@ router.get('/movies/:id', async (req, res) => {
       ],
     });
 
-    const movie = await movieData.get({ plain: true });
+    const movies = await moviesData.map((movie) => {
+      const plainMovie = movie.get({ plain: true });
 
-    movie.formattedUrls = movie.urls || '';
-
-    res.render('movie', {
-      ...movie,
-      logged_in: req.session.logged_in,
+      plainMovie.formattedUrls = plainMovie.urls || '';
+      return plainMovie;
     });
 
+    res.render('movie', {
+      movies: movies,
+      logged_in: req.session.logged_in,
+    });
+    console.log(movies);
   } catch (err) {
     res.status(500).json(err);
   }
