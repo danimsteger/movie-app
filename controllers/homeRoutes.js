@@ -132,8 +132,6 @@ router.get('/movies/:id', async (req, res) => {
       ],
     });
 
-    console.log(movieData)
-
     const movie = await movieData.get({ plain: true });
 
     movie.formattedUrls = movie.urls || '';
