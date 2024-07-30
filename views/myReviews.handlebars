@@ -40,7 +40,11 @@
                     </h5>
                   </div>
                   <div class='row d-flex my-5'>
-                    <button class='btn btn-primary m-2'>DELETE</button>
+                    <button
+                      class='btn btn-primary m-2 dlt-btn'
+                      data-reviewId='{{review.id}}'
+                      id='delete-btn'
+                    >DELETE</button>
 
                   </div>
                 </div>
@@ -54,3 +58,4 @@
   </div>
 
 </section>
+<script src='/js/deleteReview.js'></script>

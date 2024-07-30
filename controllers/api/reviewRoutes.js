@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Review, User, Movie } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
@@ -40,6 +41,25 @@ router.post('/', async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
     console.log('Adding a review isnt working');
+  }
+});
+
+router.delete('/:id', withAuth, async (req, res) => {
+  try {
+    const reviewData = await Review.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!reviewData) {
+      res.status(404).json({ message: 'no review found with this id!' });
+      return;
+    }
+
+    res.status(200).json(reviewData);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

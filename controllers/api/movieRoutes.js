@@ -5,9 +5,9 @@ const withAuth = require('../../utils/auth');
 router.get('/', async (req, res) => {
   try {
     const movieData = await Movie.findAll({
-        include: [{model: Review}]
+      include: [{ model: Review }],
     });
-    res.status(200).json(movieData)
+    res.status(200).json(movieData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -16,10 +16,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const movieData = await Movie.findByPk(req.params.id, {
-      include: [{model: Review}]
+      include: [{ model: Review }],
     });
     if (!movieData) {
-      res.status(404).json({ message: 'No movie with this id!'});
+      res.status(404).json({ message: 'No movie with this id!' });
     }
     res.status(200).json(movieData);
   } catch (err) {
@@ -37,7 +37,7 @@ const checkMovieExists = async (userId, imdbMovieId) => {
     });
     return !!movie;
   } catch (error) {
-    console.error("Error checking if movie exists:", error);
+    console.error('Error checking if movie exists:', error);
     return false;
   }
 };
@@ -49,8 +49,10 @@ router.post('/', withAuth, async (req, res) => {
   try {
     const movieExists = await checkMovieExists(user_id, imdb_movieid);
     if (movieExists) {
-      return res.status(400).json({ message: 'This movie is already in your profile.' });
-  }
+      return res
+        .status(400)
+        .json({ message: 'This movie is already in your profile.' });
+    }
 
     const newMovie = await Movie.create({
       imdb_movieid: imdb_movieid,
@@ -68,4 +70,4 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
-module.exports = router
+module.exports = router;
