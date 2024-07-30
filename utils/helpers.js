@@ -10,7 +10,7 @@ module.exports = {
   review_stars: (rating) => {
     // Helper function to generate stars based on review rating
     let stars = '';
-    for (let i = 1; i <= rating; i++) {
+    for (let i = 1; i <= Math.min(rating,5); i++) {
       stars += '⭐'; // Add a star for each rating number
     }
     return stars;
