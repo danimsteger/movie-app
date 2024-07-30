@@ -6,51 +6,55 @@
       <div class='card-body row'>
         <div class='col-5 d-flex align-items-center justify-content-center'>
           <img
-            src='{{poster}}'
+
+            src='{{movies.0.poster}}'
             class='img-fluid rounded-start'
-            alt='{{title}} Poster'
+            alt='{{movies.0.title}} Poster'
           />
         </div>
         <div class='col-5 ml-0'>
-          <h3>{{title}}</h3>
-          <p>{{plot}}</p>
+          <h3>{{movies.0.title}}</h3>
+          <p>{{movies.0.plot}}</p>
           <a><p>Watch Here:</p></a>
-          <div class='dark-link'>
-            {{{formattedUrls}}}
+          <div>
+            {{{movies.0.formattedUrls}}}
           </div>
         </div>
         <div class='col-1 d-flex align-items-center'>
 
           <button
             class='btn btn-secondary addButton'
-            data-imdbid='{{imdb_movieid}}'
-            data-title='{{title}}'
-            data-poster='{{poster}}'
-            data-plot='{{plot}}'
-            data-urls='{{formattedUrls}}'
+            data-imdbid='{{movies.0.imdb_movieid}}'
+            data-title='{{movies.0.title}}'
+            data-poster='{{movies.0.poster}}'
+            data-plot='{{movies.0.plot}}'
+            data-urls='{{movies.0.formattedUrls}}'
           >+</button>
         </div>
       </div>
     </div>
 
-    {{#each reviews as |review|}}
-      <div class='d-flex justify-content-center m-4'>
-        <div class='card col-9'>
-          <div class='card-header d-flex justify-content-between pt-3'>
-            <h3>{{review.user.name}} says...</h3>
 
-            <h2>
-              {{review_stars review.rating}}
-            </h2>
+    {{#each movies}}
+      {{#each reviews as |review|}}
+        <div class='d-flex justify-content-center'>
+          <div class='card col-9'>
+            <div class='card-header d-flex justify-content-between pt-3'>
+              <h3>{{review.user.name}} says...</h3>
+              
+              <h2>
+                {{review_stars review.rating}}
+              </h2>
 
-          </div>
-          <div class='card-body'>
-            <h5>
-              {{review.review}}
-            </h5>
+            </div>
+            <div class='card-body'>
+              <h5>
+                {{review.review}}
+              </h5>
+            </div>
           </div>
         </div>
-      </div>
+      {{/each}}
     {{/each}}
   </div>
 </section>
