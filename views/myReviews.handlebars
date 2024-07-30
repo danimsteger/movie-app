@@ -14,11 +14,11 @@
       </div>
       <div class='card-body lighter'>
         <h4 class='card-text'>
-          View all your movie reviews here. Edit or delete them, too!
+          View all your movie reviews here. You can delete them, too!
         </h4>
-        <div class='d-flex flex-wrap'>
+        <div class='d-flex flex-wrap justify-content-center'>
           {{#each reviews as |review|}}
-            <div class='card m-5 col-5'>
+            <div class='card m-5 col-4 thick'>
               <div class='card-header d-flex justify-content-between'><h2
                   class='ml-4'
                 >{{review.movie.title}}</h2>

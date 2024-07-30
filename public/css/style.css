@@ -88,11 +88,23 @@ body {
   background-size: contain;
   border: var(--bs-border-width) solid var(--dark);
   -webkit-print-color-adjust: exact;
-  color-adjust: exact;
   print-color-adjust: exact;
 }
 
 .card {
   --bs-card-bg: var(--lighter);
   --bs-card-color: var(--darkest);
+}
+
+a {
+  text-decoration: none;
+  color: var(--dark);
+}
+.light-link {
+  text-decoration: none;
+  color: var(--lighter);
+}
+
+.thick {
+  border: solid var(--darkest) 10px;
 }
