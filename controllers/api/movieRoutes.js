@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Movie, Review } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+// Get all movies api route
 router.get('/', async (req, res) => {
   try {
     const movieData = await Movie.findAll({
@@ -13,6 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get movie by id api route
 router.get('/:id', async (req, res) => {
   try {
     const movieData = await Movie.findByPk(req.params.id, {
@@ -27,6 +29,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Check if a movie exists on a users profile by imdbMovieId
 const checkMovieExists = async (userId, imdbMovieId) => {
   try {
     const movie = await Movie.findOne({
@@ -42,6 +45,7 @@ const checkMovieExists = async (userId, imdbMovieId) => {
   }
 };
 
+// Adds a movie to database after checking if that movie is in the user's profile
 router.post('/', withAuth, async (req, res) => {
   const { imdb_movieid, title, poster, plot, urls } = req.body;
   const user_id = req.session.user_id;

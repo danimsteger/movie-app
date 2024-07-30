@@ -1,6 +1,9 @@
+{{! New Review page for a movie }}
 <section class='m-5 d-flex justify-content-center'>
   <div class='card text-center col-11 justify-content-center'>
     <div class='card-header'>Leave a Review for
+
+      {{! Movie title, and poster added in through newReview JS }}
       <span id='movie-title'>INSERT MOVIE TITLE HERE!!</span></div>
     <div class='card-body lighter row'>
       <div class='col-3'>
@@ -14,6 +17,7 @@
       <div class='col-8 d-flex align-items-center'>
         <form class='form new-review-form'>
 
+          {{! Rating form question  }}
           <div class='row mb-5 justify-content-center'>
             <label for='movieRating' class='col-sm-3 col-form-label'>Rating:
             </label>
@@ -91,6 +95,7 @@
             </div>
           </div>
 
+          {{! Review Content }}
           <div class='row my-5 justify-content-center'>
             <label for='reviewContent' class='col-sm-3 col-form-label'>Review:
             </label>

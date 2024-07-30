@@ -1,3 +1,4 @@
+// Gathers API keys
 const getApiKeys = async () => {
   try {
     const response = await fetch('/api/keys');
@@ -9,9 +10,11 @@ const getApiKeys = async () => {
   }
 };
 
+// Search movies via API functionality used on search page
 const searchMovieHandle = async (event) => {
   event.preventDefault();
 
+  // gathers what users input in search bar
   const userSearch = document
     .querySelector('#movie-search')
     .value.trim()
@@ -19,9 +22,12 @@ const searchMovieHandle = async (event) => {
 
   if (userSearch) {
     try {
+      // gathers api keys and uses enviornment variables
       const keys = await getApiKeys();
       const OMDB_KEY = keys.OMDB_KEY;
       const WATCHMODE_KEY = keys.WATCHMODE_KEY;
+
+      // fetches omdbapi search results based on what user searched
       const movieResponse = await fetch(
         `https://www.omdbapi.com/?t=${userSearch}&apikey=${OMDB_KEY}`
       );
@@ -31,27 +37,34 @@ const searchMovieHandle = async (event) => {
       console.log(movieInfo);
 
       if (!movieInfo.imdbID) {
+        // Alerts users if no movie was found
         console.error('IMDB ID not found in movie data');
         alert('Movie not found.');
         return;
       }
 
+      // fetches watchmode API with imdbmovie id gathered from previous api search
       const watchmodeResponse = await fetch(
         `https://api.watchmode.com/v1/title/${movieInfo.imdbID}/sources/?apiKey=${WATCHMODE_KEY}`
       );
+
       if (!watchmodeResponse.ok)
         throw new Error('Failed to fetch streaming sources');
 
       const watchmodeData = await watchmodeResponse.json();
       console.log(watchmodeData);
 
+      // takes results of watchmode api fetch and returns them as links
       const streamingSources = watchmodeData.slice(0, 5).map((source) => {
         return `<a href="${source.web_url}" target="_blank">${source.name}</a>`;
       });
+
+      // adds line breaks between urls to display stacked on top of each other
       const formattedUrls = streamingSources.join('<br>');
 
       console.log('First 5 Streaming Service URLs:', streamingSources);
 
+      // creates html for the movie card with gathered information from the two apis
       const movieCardHTML = `
         <div class="card col-10 m-5">
           <div class="card-body row">
@@ -84,6 +97,7 @@ const searchMovieHandle = async (event) => {
       `;
 
       const movieContainer = document.querySelector('#movie-container');
+      // displays moviecard html with movie information in the movie-container on the 'search' page
       if (movieContainer) {
         movieContainer.innerHTML = movieCardHTML;
       } else {
@@ -96,17 +110,21 @@ const searchMovieHandle = async (event) => {
   }
 };
 
+// Add movie to profile functionality used on the search page
 const addMovieToProfile = async (event) => {
+  // Gathers information about the movie stored in the "+" button attributes
   const imdbMovieId = event.target.getAttribute('data-imdbid');
   const title = event.target.getAttribute('data-title');
   const poster = event.target.getAttribute('data-poster');
   const plot = event.target.getAttribute('data-plot');
   const urls = decodeURIComponent(event.target.getAttribute('data-urls'));
 
+  // if not logged-in, redirecto to login page
   if (!loggedIn) {
     document.location.replace('/users/login');
   } else {
     try {
+      // Posts movie information gathered from the "+" button attributes
       const response = await fetch('/api/movies', {
         method: 'POST',
         headers: {
@@ -122,7 +140,7 @@ const addMovieToProfile = async (event) => {
       });
 
       if (response.ok) {
-        console.log('logged in');
+        // if movie is added, direct users to /users/movies page
         alert('Movie added to profile!');
         document.location.replace('/users/movies');
       } else {
@@ -135,10 +153,12 @@ const addMovieToProfile = async (event) => {
   }
 };
 
+// event listener for search submit button
 document
   .querySelector('#submitBtn')
   .addEventListener('click', searchMovieHandle);
 
+// event listener for movie container where moviehtml card is populated
 document
   .querySelector('#movie-container')
   .addEventListener('click', (event) => {

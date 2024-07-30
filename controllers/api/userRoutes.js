@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Model } = require('sequelize');
 const { User } = require('../../models');
 
+// Get all user api route
 router.get('/', async (req, res) => {
   try {
     const userData = await User.findAll();
@@ -11,6 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get a user by id api route
 router.get('/:id', async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id);
@@ -23,6 +25,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Adds a user to the database
 router.post('/', async (req, res) => {
   try {
     const userData = await User.create(req.body);
@@ -32,6 +35,7 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Creates a logged in session for a user by finding a user with a certain email and checking if the password inputed matches that corresponding email
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({
@@ -61,6 +65,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Ends a logged in session for a user
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {

@@ -1,3 +1,4 @@
+{{! Displays all movies for logged-in user }}
 <section>
   <div class='d-flex justify-content-center'>
     <div class='card text-center col-11 m-4'>
@@ -21,16 +22,24 @@
           see!
         </h4>
         <div class='d-flex flex-wrap mx-4 justify-content-center'>
+
+          {{! Creates movie card for all movies user has added to their profile }}
           {{#each movies}}
             <div class='card rounded text-center m-3' style='width: 18rem'>
               <div class='card-body darker'>
+
+                {{! Card contains movie title, poster, and button to review }}
                 <h5 class='card-header'>{{title}}</h5>
+
+                {{! Movie poster links to individual movie page }}
                 <a href='/movies/{{id}}'><img
                     src='{{poster}}'
                     class='img-fluid rounded'
                     alt='{{title}} Poster'
                   />
                 </a>
+
+                {{! 'Review' button links to new review page for that movie }}
                 <a
                   href='/reviews/new?movieId={{id}}'
                   class='btn btn-secondary mt-3'
